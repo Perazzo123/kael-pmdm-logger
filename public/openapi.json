@@ -1,0 +1,51 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Kael PMDM Logger API",
+    "description": "Endpoint de registro da Trilha de Capacitação PM/DM.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    { "url": "https://kael-pmdm-logger.vercel.app" }
+  ],
+  "paths": {
+    "/api/log": {
+      "post": {
+        "summary": "Registra acesso e consulta de alunos na Trilha PM/DM",
+        "operationId": "saveLog",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["user", "bloco", "acao", "consulta", "timestamp"],
+                "properties": {
+                  "user": { "type": "string", "description": "Nome ou e-mail do aluno" },
+                  "bloco": { "type": "string", "enum": ["B0","B1","B2","B3","B4","B5","B6","B7"] },
+                  "acao": { "type": "string", "description": "consulta | quiz | conclusao" },
+                  "consulta": { "type": "string", "description": "Tema/pergunta feita ao agente" },
+                  "timestamp": { "type": "string", "format": "date-time" }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
